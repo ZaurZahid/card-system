@@ -2,12 +2,19 @@ import React, { useState } from 'react'
 import { setRefreshToken } from '../../utils'
 import { setAccessToken } from './../../utils/index';
 import { loginService } from '../../utils/services/auth';
+import { forgetPasswordService } from './../../utils/services/auth';
 
 function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState<boolean>(false)
     const [errMessage, setErrMessage] = useState('')
+
+    const [openForgetForm, setOpenForgetForm] = useState(false)
+    const [forgetEmail, setForgetEmail] = useState('')
+    const [loadingForget, setLoadingForget] = useState<boolean>(false)
+    const [forgetPassSuccessMessage, setForgetPassSuccessMessage] = useState('')
+    const [forgetPassErrMessage, setForgetPassErrMessage] = useState('')
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name
@@ -56,13 +63,32 @@ function Login() {
         }
     }
 
-    return (
-        <>
-            <section>
-                <div className="img-container">
-                    <img src="/img/bg.jpg" alt="img-container" />
-                </div>
-            </section>
+    const handleSubmitForget = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        setLoadingForget(true)
+        setForgetPassErrMessage('')
+
+        const emailVal = forgetEmail.trim()
+
+        if (emailVal) {
+            forgetPasswordService({ email: emailVal })
+                .then(resp => {
+                    if (resp.status === 200) {
+                        setForgetPassSuccessMessage('Link was sent. Please, check your email')
+                    }
+                })
+                .catch(() => {
+                    setForgetPassErrMessage('No Accounts Registered')
+                    setLoadingForget(false)
+                });
+        } else {
+            setForgetPassErrMessage('Fill in inputs')
+            setLoadingForget(false)
+        }
+    }
+
+    const renderLoginContent = () => {
+        let content = (
             <div className="log-in-container">
                 <div className="content">
                     <div className="header">
@@ -83,12 +109,49 @@ function Login() {
                                 <button type="submit" disabled={loading}>Log In</button>
                             </div>
                             <div className="mb-3">
-                                <a href="./f-pass.html" className="forgot-link"> Forgot your password ?</a>
+                                <span onClick={() => setOpenForgetForm(true)} style={{ textDecoration: "underline", color: "blue", cursor: "default" }}> Forgot your password ?</span>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+        )
+
+        if (openForgetForm) {
+            content = (
+                <div className="form">
+                    <h5 className="title">Forgot Your Password ?</h5>
+                    <span onClick={() => setOpenForgetForm(false)} style={{ cursor: "default" }}> Back</span>
+
+                    <form onSubmit={handleSubmitForget}>
+                        <label> Email</label>
+                        <input type="email" name="email" value={forgetEmail} onChange={(e) => setForgetEmail(e.target.value)} className="form-control" placeholder="Enter Your Email" />
+                        {forgetPassErrMessage && <p style={{ color: "red" }}>{forgetPassErrMessage}</p>}
+                        <button type="submit" className="form-control" disabled={loadingForget}>Submit</button>
+                    </form>
+                </div>
+            )
+        }
+
+        if (forgetPassSuccessMessage) {
+            content = (
+                <div className="form" style={{ height: "auto" }}>
+                    <h5 className="title">{forgetPassSuccessMessage}</h5>
+                </div>
+            )
+        }
+
+        return content
+    }
+
+    return (
+        <>
+            <section>
+                <div className="img-container">
+                    <img src="/img/bg.jpg" alt="img-container" />
+                </div>
+            </section>
+            {renderLoginContent()}
         </>
     )
 }

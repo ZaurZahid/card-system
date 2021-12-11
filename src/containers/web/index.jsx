@@ -3,6 +3,7 @@ import Home from '../../components/web/Home';
 import Deposit from '../../components/web/Deposit';
 import ClientCards from '../../components/web/ClientCards';
 import Login from '../../components/web/Login';
+import RecoverPassword from '../../components/web/RecoverPassword';
 import NotFound from '../../components/web/NotFound';
 import { RequireAuth } from '../../utils/ProtectRoute';
 import { NotRequireAuth } from '../../utils/ProtectRoute';
@@ -21,6 +22,7 @@ function index() {
 
                 <Route element={<NotRequireAuth />}>
                     <Route path="/login" element={<Login />} />
+                    <Route path="/recover_password" element={<RecoverPassword />} />
                 </Route>
             </Routes>
         </Layout>

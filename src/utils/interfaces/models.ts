@@ -13,3 +13,10 @@ export interface IClientCardRq {
     accountId: number,
     cardId: number,
 }
+
+export interface IRecoverPasswordRq {
+    email: string;
+    token: string,
+    password: any,
+    confirmPassword: string | number
+}
