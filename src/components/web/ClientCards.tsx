@@ -61,8 +61,8 @@ function ClientCards() {
                         </tr>
                     </thead>
                     <tbody>
-                        {clientCards.map((clientCard: { client: { userName: string }, accountId: any, cardId: any }) =>
-                            <tr>
+                        {clientCards.map((clientCard: { client: { userName: string }, accountId: any, cardId: any }, index: any) =>
+                            <tr key={index}>
                                 <th scope="row">{clientCard.client.userName}</th>
                                 <td>{clientCard.accountId}</td>
                                 <td>{clientCard.cardId}</td>

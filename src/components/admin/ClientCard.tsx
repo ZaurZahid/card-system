@@ -150,8 +150,8 @@ function ClientCard() {
                         fetchData()
                     }
                 })
-                .catch(() => {
-                    setErrMessage('Wrong credentaials')
+                .catch((e) => {
+                    setErrMessage(e.message)
                     setDisabled(false)
                 });
         } else {
@@ -176,8 +176,8 @@ function ClientCard() {
                 <tbody>
                     {clientCards.length ? (
                         <>
-                            {clientCards.map((clientCard: { client: { userName: string }, accountId: any, cardId: any }) =>
-                                <tr>
+                            {clientCards.map((clientCard: { client: { userName: string }, accountId: any, cardId: any }, index: any) =>
+                                <tr key={index}>
                                     <th scope="row">{clientCard.client.userName}</th>
                                     <td>{clientCard.accountId}</td>
                                     <td>{clientCard.cardId}</td>
@@ -199,8 +199,8 @@ function ClientCard() {
                             <select name="user" value={selectedUser} onChange={handleChange} disabled={loadingUsers}>
                                 <option value={'-1'}>select</option>
                                 {users
-                                    ? users.map((user: { id: string, userName: string }) =>
-                                        <option value={user.id}>{user.userName}</option>
+                                    ? users.map((user: { id: string, userName: string }, index: any) =>
+                                        <option value={user.id} key={index}>{user.userName}</option>
                                     )
                                     : null
                                 }
@@ -212,8 +212,8 @@ function ClientCard() {
                             <select name="account" value={selectedAccount} onChange={handleChange} disabled={loadingAccounts}>
                                 <option value={-1}>select</option>
                                 {accounts
-                                    ? accounts.map((account: { id: string, accountNumber: string }) =>
-                                        <option value={account.id}>{account.accountNumber}</option>
+                                    ? accounts.map((account: { id: string, accountNumber: string }, index: any) =>
+                                        <option value={account.id} key={index}>{account.accountNumber}</option>
                                     )
                                     : null
                                 }
@@ -224,8 +224,8 @@ function ClientCard() {
                             <select name="card" value={selectedCard} onChange={handleChange} disabled={loadingCards}>
                                 <option value={-1}>select</option>
                                 {cards
-                                    ? cards.map((card: { id: string, number: string }) =>
-                                        <option value={card.id}>{card.number}</option>
+                                    ? cards.map((card: { id: string, number: string }, index: any) =>
+                                        <option value={card.id} key={index}>{card.number}</option>
                                     )
                                     : null
                                 }

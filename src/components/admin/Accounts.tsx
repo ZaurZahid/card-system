@@ -101,8 +101,8 @@ function Accounts() {
                 <tbody>
                     {accounts.length ? (
                         <>
-                            {accounts.map((account: AccountParams) =>
-                                <tr>
+                            {accounts.map((account: AccountParams, index: any) =>
+                                <tr key={index}>
                                     <th scope="row">{account.id}</th>
                                     <td>{account.accountNumber}</td>
                                     <td>{account.balance}</td>
