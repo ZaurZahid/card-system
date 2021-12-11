@@ -1,0 +1,112 @@
+.Popup {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999999999;
+  overflow-x: hidden;
+  overflow-y: auto;
+  animation: fadeIn 1s;
+}
+
+.ContentContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999999999;
+}
+
+.Content {
+  padding: 16px;
+  background: #ffffff;
+  z-index: 99999999999;
+  position: relative;
+  overflow: auto;
+  box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+
+  width: 638px;
+}
+
+.Header {
+  display: flex;
+  align-content: center;
+  justify-content: flex-end;
+}
+
+.ModalCloseBtn {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  width: 21px;
+  height: 21px;
+}
+
+.ChildContainer {
+  // background-color: red;
+  margin: 7px;
+}
+
+.moduleBackground {
+  position: absolute;
+  display: table;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: rgba(32, 30, 30, 0.7);
+  mix-blend-mode: normal;
+  opacity: 0.38;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+@keyframes fadeIn {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .Content {
+    padding: 14px;
+    width: 550px;
+  }
+  .ModalCloseBtn {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .Content {
+    padding: 13px;
+    width: 450px;
+  }
+  .ModalCloseBtn {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .Content {
+    padding: 12px;
+    width: 320px;
+  }
+  .ModalCloseBtn {
+    width: 15px;
+    height: 15px;
+  }
+}

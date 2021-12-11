@@ -1,0 +1,378 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif !important;
+}
+
+header {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 10px 0;
+}
+
+header .nav-link {
+    position: relative;
+    transition: .5s ease;
+
+
+}
+
+
+header .navbar-brand {
+    color: #000;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+header .nav-link:hover {
+    color: #6A6864 !important;
+}
+
+header .nav-link,
+.dropdown-menu .dropdown-item {
+    color: #000 !important;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+header .nav-link.active {
+    color: blue !important;
+}
+
+.img-container {
+    height: 100vh;
+    width: 100%;
+
+
+}
+
+.img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover
+}
+
+.text-content {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -20%);
+
+}
+
+.text-content p {
+    text-align: center;
+    font-size: 30px;
+    color: #fff;
+}
+
+.registered-cards {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -30%);
+    background-color: #fff;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 10px;
+    width: 80%;
+    padding: 20px;
+}
+
+.registered-cards .title {
+    font-weight: 600;
+    font-size: 30px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.registered-cards table tr th {
+    text-align: center;
+    font-size: 17px;
+    color: #222;
+    text-transform: uppercase;
+
+}
+
+.registered-cards table tr td {
+    text-align: center;
+    font-weight: 500;
+    padding: 25px 0 0;
+    border: none !important;
+}
+
+.log-in-container {
+    padding: 20px;
+    width: 500px;
+    height: 430px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    background-color: #eee;
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+}
+
+.log-in-container .header {
+    text-align: center;
+}
+
+.log-in-container .header .title {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.log-in-container .header .desc {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.form-container .form-label {
+    color: #000;
+    font-weight: 500;
+}
+
+.form-container input:focus {
+    border: none;
+    box-shadow: none;
+    outline: none;
+}
+
+.form-container input:active {
+    border: none;
+    box-shadow: none;
+    outline: none;
+}
+
+.form-container button {
+    background-color: #23A8F2;
+    margin-top: 30px;
+    width: 90%;
+    height: 40px;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 500;
+    border: none;
+    transition: .4s ease;
+}
+
+.form-container button:hover {
+    background-color: transparent;
+    border: 1px solid #23A8F2;
+    color: #23A8F2;
+}
+
+.form-container .forgot-link {
+    text-decoration: none;
+    margin: 20px;
+    display: inline-block;
+    color: #0085D1;
+}
+
+.form-container .forgot-link:hover {
+    text-decoration: underline;
+}
+
+.form {
+    background-color: #eee;
+    width: 500px;
+    height: 300px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -30%);
+
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.form .title {
+    text-align: center;
+    font-size: 22px;
+}
+
+.form label {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.form input {
+    margin: 10px 0;
+    height: 50px;
+}
+
+.form input:focus {
+    box-shadow: none;
+    border: 2px solid #0085D1;
+}
+
+.form button {
+    border: none;
+
+    margin: 30px 0;
+    background-color: #23A8F2;
+    color: #fff;
+
+    height: 50px;
+    border-radius: 5px;
+}
+
+.deposit-cards {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    width: 500px;
+    height: 350px;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.deposit-cards .title {
+    font-size: 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+
+}
+
+.deposit-cards label {
+    margin-bottom: 10px;
+}
+
+.deposit-cards button {
+    background-color: #0085D1;
+    color: #fff;
+}
+
+.deposit-cards input:focus,
+.deposit-cards select:focus,
+.deposit-cards button:focus {
+    border: 1px solid #0085D1;
+    box-shadow: none;
+}
+
+button:disabled {
+    background-color: rgba(128, 128, 128, 0.596);
+}
+
+.sidebar {
+    background-color: #26221f;
+    width: 20%;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    padding: 20px 0;
+    border-right: 6px solid #288b46;
+}
+
+.sidebar .sidebar-title {
+    background-color: #288b46;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.sidebar .sidebar-title a {
+    color: #fff !important;
+    text-decoration: none;
+}
+
+.sidebar ul {
+    list-style: none;
+    margin: 30px 20px 0;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 30px;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-transform: capitalize;
+    font-weight: 400;
+    font-size: 15px;
+    text-decoration: none;
+    position: relative;
+}
+
+.sidebar ul li a::after {
+    position: absolute;
+    content: "";
+    background-color: #288b46;
+    height: 2px;
+    width: 100%;
+    left: 0;
+    right: 0;
+    transform: scale(0);
+    transition: 0.4s ease;
+    bottom: -3px;
+}
+
+.sidebar ul li a:hover::after {
+    transform: scale(1);
+}
+
+.main {
+    width: 80%;
+    margin: 50px 0 0;
+    position: absolute;
+    right: 0;
+}
+
+.main .table {
+    border-top: 1px solid #000;
+}
+
+.main .link a {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #288b46;
+    width: 140px;
+    height: 50px;
+    border-radius: 5px;
+    color: #fff;
+    margin: 0 30px 10px;
+    display: flex;
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-form-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.modal-form {
+    background-color: #eee;
+    border-radius: 3px;
+    padding: 20px;
+    width: 600px;
+    height: 400px;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.modal-form .form-content form div {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.modal-form .form-content form label {
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.modal-form .form-content form input {
+    height: 40px;
+    padding-left: 10px;
+}
+
+.modal-form .form-content form input:focus {
+    outline: none;
+}
