@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { recoverPasswordService } from '../../utils/services/auth'
 import { useLocation } from 'react-router-dom';
-import { setRefreshToken } from '../../utils';
-import { setAccessToken } from './../../utils/index';
 
 function RecoverPassword() {
     const [email, setEmail] = useState('')

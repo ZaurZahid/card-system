@@ -5,7 +5,6 @@ import {
     getCards, getClientCards,/* , addAccountService */
     getUsers
 } from './../../utils/services/client_cards';
-import { AccountParams } from './../../utils/interfaces/Params.interface';
 import Loading from './../helpers/Loading/index';
 import { getAccounts } from './../../utils/services/accounts';
 

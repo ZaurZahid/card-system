@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./Layout.module.scss";
 import Sidebar from './../Sidebar/index';
 
 type AdminLayoutProps = {
