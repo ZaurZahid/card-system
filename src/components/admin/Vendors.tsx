@@ -1,16 +1,17 @@
 import React from "react"
 import Modal from './../helpers/Modal/index';
-import { getAccounts, addAccountService } from './../../utils/services/accounts';
-import { AccountParams } from './../../utils/interfaces/Params.interface';
+import { getVendors, addVendorService } from './../../utils/services/vendors';
+import { VendorParams } from './../../utils/interfaces/Params.interface';
 import Loading from './../helpers/Loading/index';
 
-function Accounts() {
+function Vendors() {
     const [modalOpen, setModalOpen] = React.useState<boolean>(false)
     const [loading, setLoading] = React.useState(true);
-    const [accounts, setAccounts] = React.useState([]);
+    const [vendors, setVendors] = React.useState([]);
     const [disabled, setDisabled] = React.useState<boolean>(false)
-    const [accountNumber, setAccountNumber] = React.useState('')
-    const [balance, setBalance] = React.useState('')
+    const [name, setName] = React.useState('')
+    const [phone, setPhone] = React.useState('')
+    const [email, setEmail] = React.useState('')
     const [errMessage, setErrMessage] = React.useState('')
 
     React.useEffect(() => {
@@ -21,9 +22,9 @@ function Accounts() {
         setLoading(true)
 
         try {
-            const { data, status } = await getAccounts()
+            const { data, status } = await getVendors()
             if (status === 200) {
-                setAccounts(data)
+                setVendors(data)
             }
         } catch (error) {
             console.log(error)
@@ -45,11 +46,14 @@ function Accounts() {
         const value = e.target.value
 
         switch (name) {
-            case 'accountNumber':
-                setAccountNumber(value)
+            case 'name':
+                setName(value)
                 break;
-            case 'balance':
-                setBalance(value)
+            case 'phone':
+                setPhone(value)
+                break;
+            case 'email':
+                setEmail(value)
                 break;
 
             default:
@@ -62,15 +66,17 @@ function Accounts() {
         setDisabled(true)
         setErrMessage('')
 
-        const accountNumberVal = accountNumber.trim()
-        const balanceVal = balance.trim() ? +balance.trim() : ''
+        const nameVal = name.trim()
+        const phoneVal = phone.trim() 
+        const emailVal = email.trim() 
 
-        if (accountNumberVal && balanceVal) {
-            addAccountService({ accountNumberVal, balanceVal })
+        if (nameVal && phoneVal && emailVal) {
+            addVendorService({ nameVal,phoneVal,emailVal })
                 .then(resp => {
                     if (resp.status === 200) {
-                        setAccountNumber('')
-                        setBalance('')
+                        setName('')
+                        setPhone('')
+                        setEmail('')
                         closeModal()
                         fetchData()
                     }
@@ -93,19 +99,19 @@ function Accounts() {
             <table className="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Account Number</th>
-                        <th scope="col">Balance</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Email</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {accounts.length ? (
+                    {vendors.length ? (
                         <>
-                            {accounts.map((account: AccountParams, index: any) =>
+                            {vendors.map((vendor: VendorParams, index: any) =>
                                 <tr key={index}>
-                                    <th scope="row">{account.id}</th>
-                                    <td>{account.accountNumber}</td>
-                                    <td>{account.balance}</td>
+                                    <td>{vendor.name}</td>
+                                    <td>{vendor.phone}</td>
+                                    <td>{vendor.email}</td>
                                 </tr>
                             )}
                         </>
@@ -119,12 +125,19 @@ function Accounts() {
                 <Modal onClose={closeModal}>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
-                            <label>Account Number</label>
-                            <input type="text" name={'accountNumber'} value={accountNumber} onChange={handleChange} placeholder="Enter account number" required minLength={16} maxLength={16} />
+                            <label className="me-3" >Name:</label>
+                            <input type="text" name={'name'} value={name} onChange={handleChange}
+                             placeholder="Enter Your  Name" required/>
                         </div>
                         <div className="mb-3">
-                            <label>Balance</label>
-                            <input type="number" name={'balance'} value={balance} onChange={handleChange} placeholder="Enter balance" required />
+                            <label className="me-3">Phone:</label>
+                            <input type="phone" name={'phone'} value={phone} onChange={handleChange}
+                             placeholder="Enter Your Phone" required />
+                        </div>
+                        <div className="mb-3">
+                            <label className="me-3">Email:</label>
+                            <input type="email" name={'email'} value={email} onChange={handleChange}
+                             placeholder="Enter Your Email" required />
                         </div>
                         {errMessage && <p style={{ color: "red" }}>{errMessage}</p>}
                         <div className="mb-3">
@@ -137,4 +150,4 @@ function Accounts() {
     )
 }
 
-export default Accounts
+export default Vendors

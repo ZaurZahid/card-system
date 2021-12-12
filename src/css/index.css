@@ -376,3 +376,26 @@ button:disabled {
 .modal-form .form-content form input:focus {
     outline: none;
 }
+.card-form div{
+display: flex;
+flex-direction: column;
+
+}
+.card-form div input, .card-form div select{
+    width: 50%;
+    padding-left: 10px;
+    margin-top: 7px;
+    height: 40px;
+}
+
+.card-form div input:focus{
+border:1px solid #0085D1;
+outline: none;
+}
+.card-form div select:focus{
+border:1px solid #0085D1;
+outline: none;
+}
+.card-form div input::placeholder{
+    font-size: 14px;
+}

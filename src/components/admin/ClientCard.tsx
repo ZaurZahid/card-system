@@ -2,6 +2,7 @@ import React from "react"
 import Modal from './../helpers/Modal/index';
 import {
     addAccountService,
+    getAllClientCards,
     getCards, getClientCards,/* , addAccountService */
     getUsers
 } from './../../utils/services/client_cards';
@@ -36,7 +37,7 @@ function ClientCard() {
         setLoading(true)
 
         try {
-            const { data, status } = await getClientCards()
+            const { data, status } = await getAllClientCards()
             if (status === 200) {
                 setClientCards(data)
             }
@@ -163,14 +164,14 @@ function ClientCard() {
     return (
         <Loading isLoading={loading}>
             <div className="link">
-                <button type="button" onClick={openModal}>Add</button>
+                <button type="button" className="btn btn-success m-2" onClick={openModal}>Add</button>
             </div>
             <table className="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">clientId</th>
-                        <th scope="col">accountId</th>
-                        <th scope="col">cardId</th>
+                        <th scope="col">Client Id</th>
+                        <th scope="col">Account Id</th>
+                        <th scope="col">Card Id</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -194,7 +195,7 @@ function ClientCard() {
                 <Modal onClose={closeModal}>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
-                            <label>ClientId</label>
+                            <label className="me-3">Client Id</label>
 
                             <select name="user" value={selectedUser} onChange={handleChange} disabled={loadingUsers}>
                                 <option value={'-1'}>select</option>
@@ -207,7 +208,7 @@ function ClientCard() {
                             </select>
                         </div>
                         <div className="mb-3">
-                            <label>Account Id</label>
+                            <label className="me-3">Account Id</label>
 
                             <select name="account" value={selectedAccount} onChange={handleChange} disabled={loadingAccounts}>
                                 <option value={-1}>select</option>
@@ -220,7 +221,7 @@ function ClientCard() {
                             </select>
                         </div>
                         <div className="mb-3">
-                            <label>Card Id</label>
+                            <label className="me-3">Card Id</label>
                             <select name="card" value={selectedCard} onChange={handleChange} disabled={loadingCards}>
                                 <option value={-1}>select</option>
                                 {cards

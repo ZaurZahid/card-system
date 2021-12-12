@@ -2,7 +2,13 @@ import { Axios } from "../axios";
 import { IClientCardRq } from "../interfaces/models";
 import { getJWT } from './../index';
 
-export const getClientCards = async () => {
+export const getAllClientCards = async () => {
+    const resp = await Axios.get('ClientCard', getJWT());
+
+    return resp
+};
+
+export const getClientCards = async (userId:any) => {
     const resp = await Axios.get('ClientCard', getJWT());
 
     return resp

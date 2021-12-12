@@ -35,7 +35,7 @@ function RecoverPassword() {
                 break;
         }
     }
-
+ 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setLoading(true)
@@ -44,13 +44,17 @@ function RecoverPassword() {
         const emailVal = email.trim()
         const newPasswordVal = new_password.trim()
         const confirmPasswordVal = confirm_password.trim()
-        const tokenValue = getAccessTokenFromQuery()
+        let tokenValue = getAccessTokenFromQuery()
+        
+        tokenValue = tokenValue.replaceAll(" ", "+");
 
         if (emailVal && newPasswordVal && confirmPasswordVal) {
             if (newPasswordVal === confirmPasswordVal) {
-                recoverPasswordService({ email, token: tokenValue, password: newPasswordVal, confirmPassword: confirmPasswordVal })
+                recoverPasswordService({ email:emailVal, token: tokenValue, password: newPasswordVal, confirmPassword: confirmPasswordVal })
                     .then(resp => {
                         if (resp.status === 200) {
+                        
+                           
                             window.location.href = '/login'
                         }
                     })

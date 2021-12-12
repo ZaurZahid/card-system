@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { getAccessToken, removeAccessToken, removeRefreshToken } from '../../../utils/index';
+import { getAccessToken, removeAccessToken, removeRefreshToken, removeUserId } from '../../../utils/index';
 import { logoutService } from '../../../utils/services/auth';
 
 function Header() {
@@ -8,6 +8,7 @@ function Header() {
         logoutService().then(() => {
             removeAccessToken()
             removeRefreshToken()
+            removeUserId()
             window.location.href = '/login'
         })
     }

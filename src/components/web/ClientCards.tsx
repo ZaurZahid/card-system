@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { getUserId } from '../../utils';
 import { getClientCard, getClientCards } from './../../utils/services/client_cards';
 import Loading from './../helpers/Loading/index';
 
@@ -16,7 +17,7 @@ function ClientCards() {
         setLoading(true)
 
         try {
-            const { data, status } = await getClientCards()
+            const { data, status } = await getClientCards(getUserId())
             if (status === 200) {
                 setClientCards(data)
             }

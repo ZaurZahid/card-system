@@ -26,9 +26,9 @@ export const forgetPasswordService = ({ email }: { email: string }) => {
 }
 
 export const recoverPasswordService = ({ email, token, password, confirmPassword }: IRecoverPasswordRq) => {
-    return Axios.post(`ForgotPasswordTokens`,
+    return Axios.post(`ForgotPasswordConfirmations`,
         {
-            email, token, password: password.toString(), cconfirmPassword: confirmPassword.toString()
+            email, token, password: password.toString(), confirmPassword: confirmPassword.toString()
         }
     );
 }

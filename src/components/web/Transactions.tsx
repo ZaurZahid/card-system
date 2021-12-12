@@ -4,7 +4,7 @@ import { getAccounts, addAccountService } from './../../utils/services/accounts'
 import { AccountParams } from './../../utils/interfaces/Params.interface';
 import Loading from './../helpers/Loading/index';
 
-function Accounts() {
+function Transactions() {
     const [modalOpen, setModalOpen] = React.useState<boolean>(false)
     const [loading, setLoading] = React.useState(true);
     const [accounts, setAccounts] = React.useState([]);
@@ -88,14 +88,14 @@ function Accounts() {
     return (
         <Loading isLoading={loading}>
             <div className="link">
-                <button type="button" className="btn btn-success m-2" onClick={openModal}>Add </button>
+                <button type="button" onClick={openModal}>Add </button>
             </div>
             <table className="table table-striped">
                 <thead>
                     <tr>
                         <th scope="col">Id</th>
-                        <th scope="col">Account Number</th>
-                        <th scope="col">Balance</th>
+                        <th scope="col">accountNumber</th>
+                        <th scope="col">balance</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -137,4 +137,4 @@ function Accounts() {
     )
 }
 
-export default Accounts
+export default Transactions

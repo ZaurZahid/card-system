@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { setRefreshToken } from '../../utils'
+import { setRefreshToken, setUserId } from '../../utils'
 import { setAccessToken } from './../../utils/index';
 import { loginService } from '../../utils/services/auth';
 import { forgetPasswordService } from './../../utils/services/auth';
@@ -24,7 +24,7 @@ function Login() {
             case 'email':
                 setEmail(value)
                 break;
-            case 'password':
+            case 'password': 
                 setPassword(value)
                 break;
 
@@ -46,7 +46,9 @@ function Login() {
                 .then(resp => {
                     if (resp.status === 200) {
                         const { refreshToken, jwt } = resp.data
+                        
                         setRefreshToken(refreshToken.token);
+                        setUserId(resp.data.id)
                         setAccessToken(jwt.token);
                         setLoading(false)
 

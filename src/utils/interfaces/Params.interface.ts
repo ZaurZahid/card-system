@@ -3,3 +3,40 @@ export interface AccountParams {
     accountNumber?: string,
     balance?: number
 }
+export interface UserParams {
+    id?: string,
+   firstName:string,
+   lastName:string,
+   email:string,
+   lastLoginTime:Date,
+   lastPasswordChangeDate:Date
+
+}
+export interface VendorParams {
+  
+    id: string,
+    name: string,
+    phone: string,
+    email:string
+
+}
+// export interface VendorAddressParams {
+  
+//     id: string,
+//     name: string,
+//     phone: string,
+//     email:string
+
+// }
+export interface CardParams {
+    id?:string,
+    number: string,
+    cvv: number,
+    state: number,
+    type: number,
+    valid:boolean,
+    dateRegistered:Date,
+    expirationDate: Date,
+    stateName:string,
+    typeName: string
+}

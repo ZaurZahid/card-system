@@ -22,6 +22,34 @@ function Sidebar() {
                     </li>
                     <li>
                         <Link
+                            to="/admin/vendors"
+                        >
+                            Vendors
+                        </Link>
+                    </li>
+                    {/* <li>
+                        <Link
+                            to="/admin/vendorAddress"
+                        >
+                            Vendor Address
+                        </Link>
+                    </li> */}
+                    <li>
+                        <Link
+                            to="/admin/cards"
+                        >
+                            Cards
+                        </Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/admin/users"
+                        >
+                            Users
+                        </Link>
+                    </li>
+                    <li>
+                        <Link
                             to="/admin/client_cards"
                         >
                             Client Cards
