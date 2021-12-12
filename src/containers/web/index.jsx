@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import Home from '../../components/web/Home';
 import Deposit from '../../components/web/Deposit';
+import Profile from '../../components/web/Profile';
 import Transactions from '../../components/web/Transactions';
 import ClientCards from '../../components/web/ClientCards';
 import Login from '../../components/web/Login';
@@ -18,8 +19,10 @@ function index() {
                 <Route path="*" element={<NotFound />} />
                 <Route element={<RequireAuth />}>
                     <Route path="/deposit" element={<Deposit />} />
-                    <Route path="/client_cards" element={<ClientCards />} />
                     <Route path="/transactions" element={<Transactions />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/client_cards" element={<ClientCards />} />
+                    <Route path="/mytransactions" element={<Transactions />} />
                 </Route>
                
                 <Route element={<NotRequireAuth />}>

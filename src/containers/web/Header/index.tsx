@@ -47,6 +47,22 @@ function Header() {
                                     Deposit
                                 </NavLink>
                             </li>
+                            <li className="nav-item">
+                                <NavLink
+                                    to="/mytransactions"
+                                    className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+                                >
+                                    My transactions
+                                </NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink
+                                    to="/profile"
+                                    className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+                                >
+                                    Profile
+                                </NavLink>
+                            </li>
                             {getAccessToken()
                                 ? <div className="nav-link" onClick={handleLogout} style={{ cursor: "pointer" }}>
                                     Log out

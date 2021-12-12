@@ -30,11 +30,17 @@ export interface IVendorRq {
 export interface ICardRq {
     numberVal: string,
     cvvVal: string,
-    validVal:Boolean,
+    validVal:number,
     stateVal: number,
     typeVal: number,
-    dateRegisteredVal:Date,
     expirationDateVal: Date
+
+}
+
+export interface IDepositRq {
+    cardVal:number,
+    vendorVal: number,
+    amount: number,
 
 }
 
@@ -44,18 +50,18 @@ export interface IClientCardRq {
     cardId: number,
 }
 
-export interface IDepositRq {
-    amount: number,
-    cardId: number,
-    vendorId:number,
-    type: boolean,
-    status:boolean,
-    clientId:string
-}
-
 export interface IRecoverPasswordRq {
     email: string;
     token: string,
+    password: any,
+    confirmPassword: string | number
+}
+
+export interface IEditProfileRq {
+    userId:any,
+    email: string;
+    firstName: string,
+    lastName:string,
     password: any,
     confirmPassword: string | number
 }

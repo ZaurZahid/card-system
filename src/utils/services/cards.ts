@@ -8,8 +8,22 @@ export const getCards = async () => {
     return resp
 };
 
+
+export const getTypes = async () => {
+    const resp = await Axios.get('Enum/GetCardTypes', getJWT());
+
+    return resp
+};
+
+export const getStates = async () => {
+    const resp = await Axios.get('Enum/GetCardStates', getJWT());
+
+    return resp
+};
+
+
 export const addCardService = ({ numberVal, cvvVal,validVal,stateVal,typeVal,
-    dateRegisteredVal,expirationDateVal}: ICardRq) => {
+    expirationDateVal}: ICardRq) => {
     return Axios.post(`Card`,
         {
             number: numberVal,
@@ -17,9 +31,7 @@ export const addCardService = ({ numberVal, cvvVal,validVal,stateVal,typeVal,
             valid: validVal,
             state: stateVal,
             type: typeVal,
-            dateRegistered: dateRegisteredVal,
             expirationDate: expirationDateVal
-            
         },
         getJWT()
     );

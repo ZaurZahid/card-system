@@ -55,18 +55,18 @@ function ClientCards() {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th scope="col">Client</th>
-                            <th scope="col">Account id</th>
-                            <th scope="col">Card Id</th>
-                            <th scope="col">Card</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Account number</th>
+                            <th scope="col">Card number</th>
+                            <th scope="col">Go to Card</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {clientCards.map((clientCard: { client: { userName: string }, accountId: any, cardId: any }, index: any) =>
+                        {clientCards.map((clientCard: { client: { userName: string }, account: any, card: any,cardId:any }, index: any) =>
                             <tr key={index}>
                                 <th scope="row">{clientCard.client.userName}</th>
-                                <td>{clientCard.accountId}</td>
-                                <td>{clientCard.cardId}</td>
+                                <td>{clientCard.account.accountNumber}</td>
+                                <td>{clientCard.card.number}</td>
                                 <td><button type="button" onClick={() => handleSelectCard(clientCard.cardId)}>Card</button></td>
                             </tr>
                         )}

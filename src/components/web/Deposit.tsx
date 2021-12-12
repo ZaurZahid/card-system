@@ -1,30 +1,74 @@
 import React, { useState } from 'react'
+import { recoverPasswordService } from '../../utils/services/auth'
 import { useLocation } from 'react-router-dom';
-import { getUserId } from '../../utils';
+import Loading from './../helpers/Loading/index';
+import { addDepositService, getVendors } from '../../utils/services/transaction';
+import { getCards } from '../../utils/services/cards';
+import Modal from './../helpers/Modal/index';
 
 function Deposit() {
     const [modalOpen, setModalOpen] = React.useState<boolean>(false)
-    const [amount, setAmount] = useState('')
-    const [cardId, setCardId] = useState('')
-    const [vendorId, setVendorId] = useState('')
-    const [types, setTypes] = React.useState([]);
-    const [states, setStates] = React.useState([]);
-    const [type, setType] = useState<boolean>(false)
-    const [state, setState] = useState<boolean>(false)
-    const [clientId, setClientId] = useState('')
+    const [disabled, setDisabled] = React.useState<boolean>(false)
+    const [amount, setAmount] = useState<number>(0)
     const [loading, setLoading] = useState<boolean>(false)
     const [errMessage, setErrMessage] = useState('')
-    const location = useLocation();
+
+    const [cards, setCards] = React.useState([]);
+    const [vendors, setVendors] = React.useState([]);
+
+    const [loadingCards, setLoadingCards] = React.useState(true);
+    const [loadingVendors, setLoadingVendors] = React.useState(true);
+
+    const [selectedCard, setSelectedCard] = React.useState<number>(-1);
+    const [selectedVendor, setSelectedVendor] = React.useState<number>(-1);
+
+
+
+    const fetchCards = async () => {
+        setLoadingCards(true)
+
+        try {
+            const { data, status } = await getCards()
+            if (status === 200) {
+                setCards(data)
+            }
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setLoadingCards(false)
+        }
+    }
+
+    const fetchVendors = async () => {
+        setLoadingVendors(true)
+
+        try {
+            const { data, status } = await getVendors()
+            if (status === 200) {
+                setVendors(data)
+            }
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setLoadingVendors(false)
+        }
+    }
+
 
     const openModal = () => {
         setModalOpen(true)
 
-        
+        if (!cards.length) fetchCards()
+        if (!vendors.length) fetchVendors()
+
+        console.log(vendors)
+        console.log(cards)
     }
 
     const closeModal = () => {
         setModalOpen(false)
     }
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name
@@ -32,20 +76,25 @@ function Deposit() {
 
         switch (name) {
             case 'amount':
-                setAmount(value)
+                setAmount(+value)
                 break;
-            case 'cardId':
-                setCardId(value)
+            default:
                 break;
-            case 'vendorId':
-                setVendorId(value)
+        }
+    }
+
+    const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const name = e.target.name
+        const value = e.target.value
+
+        switch (name) {
+            case 'card':
+                setSelectedCard(+value)
                 break;
-            case 'type':
-                setType(value === 'true')
+            case 'vendor':
+                setSelectedVendor(+value)
                 break;
-            case 'clientId':
-                setClientId(value)
-                break;
+
             default:
                 break;
         }
@@ -56,76 +105,90 @@ function Deposit() {
         setLoading(true)
         setErrMessage('')
 
-        const amountVal = amount.trim()
-        const cardIdVal = cardId.trim()
-        const vendorIdVal = vendorId.trim()
-        const typeVal = type
-        const statusVal = status
-        const clientIdVal = getUserId()
+        const selectedCardVal = selectedCard !== -1
+        const selectedVendorVal = selectedVendor !== -1
+
+        const amountVal = amount >= 0
 
 
-        //     if (amountVal && cardIdVal && vendorIdVal && typeVal && statusVal && clientIdVal) {
-        //         if (newPasswordVal === confirmPasswordVal) {
-        //             recoverPasswordService({ email:emailVal, token: tokenValue, password: newPasswordVal, confirmPassword: confirmPasswordVal })
-        //                 .then(resp => {
-        //                     if (resp.status === 200) {
+        if (amountVal && selectedCard && selectedVendor) {
+            addDepositService({ cardVal: selectedCard, vendorVal: selectedVendor, amount: amount })
+                .then(resp => {
+                    if (resp.status === 200) {
 
-
-        //                         window.location.href = '/login'
-        //                     }
-        //                 })
-        //                 .catch(() => {
-        //                     setErrMessage('Wrong credentaials')
-        //                     setLoading(false)
-        //                 });
-        //         } else {
-        //             setErrMessage('Passwords dont match')
-        //             setLoading(false)
-        //         }
-        //     } else {
-        //         setErrMessage('Fill in inputs')
-        //         setLoading(false)
-        //     }
-        // }
-
-        return (
-            <>
-                <section>
-                    <div className="img-container">
-                        <img src="/img/bg.jpg" alt="img-container" />
-                    </div>
-                </section>
-                <div className="deposit-container">
-                    <div className="content">
-                        <div className="header">
-                            <h4 className="title">Recover password</h4>
-                        </div>
-                        <div className="form-container">
-                            <form onSubmit={handleSubmit}>
-                                <div className="mb-3">
-                                    <label className="form-label">Email</label>
-                                    <input type="email" name="email" value={amount} onChange={handleChange} className="form-control" />
-                                </div>
-                                <div className="mb-3">
-                                    <label className="form-label">New Password</label>
-                                    <input type="password" name="new_password" value={cardId} onChange={handleChange} className="form-control" />
-                                </div>
-                                <div className="mb-3">
-                                    <label className="form-label">Confirm Password</label>
-                                    <input type="password" name="confirm_password" value={vendorId} onChange={handleChange} className="form-control" />
-                                </div>
-                                {errMessage && <p style={{ color: "red" }}>{errMessage}</p>}
-                                <div className="mb-3 form-check">
-                                    <button type="submit" disabled={loading}>Submit</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-            </>
-        )
+                        window.location.href = '/mytransactions'
+                    }
+                })
+                .catch(() => {
+                    setErrMessage('Error occured')
+                    setLoading(false)
+                });
+        } else {
+            setErrMessage('Fill in inputs')
+            setLoading(false)
+        }
     }
+
+    return (
+        <Loading isLoading={loading}>
+
+            <section>
+                <div className="img-container">
+                    <div className="link text-center">
+                        <button type="button" className="btn btn-success m-2" onClick={openModal}>Add deposit to your card</button>
+                    </div>
+                    <img src="/img/bg.jpg" alt="img-container" />
+                </div>
+            </section>
+
+
+            {modalOpen &&
+                <Modal onClose={closeModal}>
+
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                            <label className="me-3">Card</label>
+
+                            <select name="card" value={selectedCard} onChange={handleSelectChange} disabled={loadingCards}>
+                                <option value={'-1'}>select</option>
+                                {cards
+                                    ? cards.map((card: { id: string, number: string }, index: any) =>
+                                        <option value={card.id} key={index}>{card.number}</option>
+                                    )
+                                    : null
+                                }
+                            </select>
+                        </div>
+                        <div className="mb-3">
+                            <label className="me-3">Vendor</label>
+
+                            <select name="vendor" value={selectedVendor} onChange={handleSelectChange} disabled={loadingVendors}>
+                                <option value={-1}>select</option>
+                                {vendors
+                                    ? vendors.map((vendor: { id: string, name: string }, index: any) =>
+                                        <option value={vendor.id} key={index}>{vendor.name}</option>
+                                    )
+                                    : null
+                                }
+                            </select>
+                        </div>
+                        <div className="mb-3">
+                            <label>Amount</label>
+                            <input type="number" name={'amount'} value={amount} onChange={handleChange}
+                                placeholder="Enter Amount" required />
+                        </div>
+                        {errMessage && <p style={{ color: "red" }}>{errMessage}</p>}
+                        <div className="mb-3">
+                            <button type="submit" className="btn btn-success" disabled={disabled}>Submit</button>
+                        </div>
+                    </form>
+
+
+                </Modal>
+            }
+
+        </Loading>
+    )
 }
 
 export default Deposit

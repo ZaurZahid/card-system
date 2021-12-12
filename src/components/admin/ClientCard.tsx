@@ -170,18 +170,18 @@ function ClientCard() {
                 <thead>
                     <tr>
                         <th scope="col">Client Id</th>
-                        <th scope="col">Account Id</th>
-                        <th scope="col">Card Id</th>
+                        <th scope="col">Account Number</th>
+                        <th scope="col">Card Number</th>
                     </tr>
                 </thead>
                 <tbody>
                     {clientCards.length ? (
                         <>
-                            {clientCards.map((clientCard: { client: { userName: string }, accountId: any, cardId: any }, index: any) =>
+                            {clientCards.map((clientCard: { client: { userName: string }, account: any, card: any }, index: any) =>
                                 <tr key={index}>
                                     <th scope="row">{clientCard.client.userName}</th>
-                                    <td>{clientCard.accountId}</td>
-                                    <td>{clientCard.cardId}</td>
+                                    <td>{clientCard.account.accountNumber}</td>
+                                    <td>{clientCard.card.number}</td>
                                 </tr>
                             )}
                         </>
@@ -194,8 +194,9 @@ function ClientCard() {
             {modalOpen &&
                 <Modal onClose={closeModal}>
                     <form onSubmit={handleSubmit}>
+                        <h3 className="mb-3 text-danger">One account number can only have one card</h3>
                         <div className="mb-3">
-                            <label className="me-3">Client Id</label>
+                            <label className="me-3">Client</label>
 
                             <select name="user" value={selectedUser} onChange={handleChange} disabled={loadingUsers}>
                                 <option value={'-1'}>select</option>
@@ -208,7 +209,7 @@ function ClientCard() {
                             </select>
                         </div>
                         <div className="mb-3">
-                            <label className="me-3">Account Id</label>
+                            <label className="me-3">Account</label>
 
                             <select name="account" value={selectedAccount} onChange={handleChange} disabled={loadingAccounts}>
                                 <option value={-1}>select</option>
@@ -221,7 +222,7 @@ function ClientCard() {
                             </select>
                         </div>
                         <div className="mb-3">
-                            <label className="me-3">Card Id</label>
+                            <label className="me-3">Card</label>
                             <select name="card" value={selectedCard} onChange={handleChange} disabled={loadingCards}>
                                 <option value={-1}>select</option>
                                 {cards

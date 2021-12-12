@@ -3,6 +3,17 @@ export interface AccountParams {
     accountNumber?: string,
     balance?: number
 }
+
+export interface TransactionParams {
+    client: any,
+    card: any,
+    amount: number,
+    vendor: any,
+    createdAt: Date,
+    typeName:string,
+    statusName: string
+}
+
 export interface UserParams {
     id?: string,
    firstName:string,

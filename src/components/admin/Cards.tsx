@@ -1,9 +1,8 @@
 import React from "react"
 import Modal from '../helpers/Modal/index';
-import { getCards, addCardService } from '../../utils/services/cards';
+import { getStates, getTypes, getCards, addCardService } from '../../utils/services/cards';
 import { CardParams } from '../../utils/interfaces/Params.interface';
 import Loading from '../helpers/Loading/index';
-import { getStates, getTypes } from "../../utils/services/deposit";
 import { stat } from "fs/promises";
 
 function Cards() {
@@ -17,8 +16,7 @@ function Cards() {
     const [cvv, setCvv] = React.useState('')
     const [selectedState, setSelectedState] = React.useState<number>(-1);
     const [selectedType, setSelectedType] = React.useState<number>(-1);
-    const [valid, setValid] = React.useState<Boolean>(false);
-    const [dateRegistered, setDateRegistered] = React.useState<Date>();
+    const [selectedValidity, setSelectedValidty] = React.useState<number>(-1);
     const [expirationDate, setExpirationDate] = React.useState<Date>();
     const [errMessage, setErrMessage] = React.useState('')
 
@@ -95,12 +93,6 @@ function Cards() {
             case 'cvv':
                 setCvv(value)
                 break;
-            case 'valid':
-                setValid(value === 'true')
-                break;
-            case 'dateRegistered':
-                setDateRegistered(new Date(value))
-                break;
             case 'expirationDate':
                 setExpirationDate(new Date(value))
                 break;
@@ -121,6 +113,9 @@ function Cards() {
             case 'type':
                 setSelectedType(+value)
                 break;
+            case 'valid':
+                setSelectedValidty(+value)
+                break;    
 
             default:
                 break;
@@ -133,28 +128,29 @@ function Cards() {
         setErrMessage('')
         const numberVal = number.trim()
         const cvvVal = cvv.trim() 
-        const stateVal = selectedState
+        
+        const selectedStateVal = selectedState !== -1
+        const selectedTypeVal = selectedState !== -1
+        const selectedValidtyVal = selectedValidity !== -1
+
         const typeVal = selectedType
-        const validVal = valid
-        const dateRegisteredVal = dateRegistered
+        const validVal = selectedValidity
         const expirationDateVal = expirationDate
 
         var curr = new Date();
         curr.setDate(curr.getDate());
         var defaultDate = curr.toISOString().substr(0,10);
 
-
-        if (numberVal && cvvVal  && stateVal && typeVal &&validVal && dateRegisteredVal && expirationDateVal) {
-            addCardService({ numberVal, cvvVal,validVal, stateVal , typeVal ,dateRegisteredVal,
+        if (numberVal && cvvVal  && selectedStateVal && selectedTypeVal &&selectedValidtyVal && expirationDateVal) {
+            addCardService({ numberVal, cvvVal,validVal:selectedValidity,stateVal: selectedState,typeVal: selectedType,
                 expirationDateVal})
                 .then(resp => {
                     if (resp.status === 200) {
                         setNumber('')
                         setCvv('')
-                        setValid(false)
                         setSelectedState(-1)
                         setSelectedType(-1)
-                        setDateRegistered(curr)
+                        setSelectedValidty(-1)
                         setExpirationDate(curr)
                         closeModal()
                         fetchData()
@@ -224,31 +220,34 @@ function Cards() {
                         </div>
                         <div className="mb-3">
                             <label>Expire Date</label>
-                            <input type="date" name={'expirationDate'} value={expirationDate?.toDateString()} onChange={handleChange}
+                            <input type="date" name={'expirationDate'}  onChange={handleChange}
                              placeholder="Choose expire date" required />
                         </div>
                         <div className="mb-3">
                         <label className="mb-">Validity</label>
-                        <select name={'valid'} value={valid?'true':'false'} onChange={handleSelectChange}>
-                               <option value="true">True</option>
-                               <option value="false">False</option>
+                        <select name={'valid'} value={selectedValidity} onChange={handleSelectChange}>
+                               <option value={-1}>select</option>
+                               <option value={1}>True</option>
+                               <option value={0}>False</option>
 
                         </select>
                         </div>
                         <div className="mb-3">
                         <label className="mb-">State Name</label>
-                        <select name={'valid'} value={valid?'true':'false'} onChange={handleSelectChange}>
-                               <option value="true">True</option>
-                               <option value="false">False</option>
-
+                        <select name={'state'} value={selectedState} onChange={handleSelectChange}>
+                        <option value={-1}>select</option>
+                            {states.map((item,index) => {
+                                return (<option value={index}>{item}</option>);
+                            })}
                         </select>
                         </div>
                         <div className="mb-3">
                         <label className="mb-">Type Name</label>
-                        <select name={'valid'} value={valid?'true':'false'} onChange={handleSelectChange}>
-                               <option value="true">True</option>
-                               <option value="false">False</option>
-
+                        <select name={'type'} value={selectedType} onChange={handleSelectChange}>
+                        <option value={-1}>select</option>
+                            {types.map((item,index) => {
+                                return (<option value={index}>{item}</option>);
+                            })}
                         </select>
                         </div>
                         {/* <div className="mb-3">
